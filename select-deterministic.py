@@ -1,4 +1,8 @@
 import sys
+import time
+
+# Count the no. of comparisons in partitioning
+comparison_count = 0
 
 
 def median_of_5(arr):
@@ -12,6 +16,8 @@ def select(arr, k):
 
     Reference: https://www.ics.uci.edu/~eppstein/161/960130.html
     """
+
+    global comparison_count
 
     # For less than 5 numbers, just return answer
     if len(arr) < 5:
@@ -30,6 +36,7 @@ def select(arr, k):
     lesser, higher, equal = [], [], []
 
     for num in arr:
+        comparison_count += 2
         if num < median_of_median:
             lesser.append(num)
         elif num > median_of_median:
@@ -72,6 +79,13 @@ if __name__ == '__main__':
 
     # NOTE: This assumes 1 based order statistics
     # so minimum is the first order statistic
+    start = time.clock()
     ans = select(arr, k-1)
+    # sorted(arr)
+    end = time.clock()
 
-    print("Integer with rank %d is: %d" % (k, ans))
+    print("Integer with rank %d: %d" % (k, ans))
+    print("\n-----\n")
+
+    print("No. of comparisons: %d" % comparison_count)
+    print("Time taken: %0.3f sec" % (end-start))
