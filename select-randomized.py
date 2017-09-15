@@ -47,10 +47,10 @@ def partition(arr, beg, end, pvt_idx):
 # so minimum is the first order statistic
 def select(arr, beg, end, k):
     """
-    Return the k-th smallest integer in arr[beg:end]
+    Return the k-th smallest number in arr[beg:end]
     """
 
-    # If the list has only 1 integer
+    # If the list has only 1 number
     if beg == end:
         return arr[beg]
 
@@ -67,7 +67,7 @@ def select(arr, beg, end, k):
 
 
 def read_int_file_to_list(filename):
-    """Return a list of integers read from filename."""
+    """Return a list of numbers read from filename."""
 
     arr = []
     # TODO: Buffered input may increase perf?
