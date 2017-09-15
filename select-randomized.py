@@ -88,16 +88,22 @@ if __name__ == '__main__':
         print("k should be in between 1 & %d" % len(arr))
         exit(1)
 
-    times = []
+    times, comparisons = [], []
     for _ in range(0, 10):
+
         start = time.clock()
+        comparison_count = 0
+
         ans = select(arr, 0, len(arr)-1, k-1)
+
         end = time.clock()
+
         times.append(end-start)
+        comparisons.append(comparison_count)
 
     print("Integer with rank %d: %d" % (k, ans))
 
     print("\n-----\n")
-    print("No. of comparisons: %d" % comparison_count)
+    print("No. of comparisons: %d" % (sum(comparisons) / len(comparisons)))
 
     print("Time taken (avg of 10 runs): %0.3f sec" % (sum(times) / len(times)))
