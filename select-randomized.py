@@ -102,8 +102,7 @@ if __name__ == '__main__':
         comparisons.append(comparison_count)
 
     print("Integer with rank %d: %d" % (k, ans))
-
     print("\n-----\n")
-    print("No. of comparisons: %d" % (sum(comparisons) / len(comparisons)))
 
+    print("No. of comparisons: %d" % (sum(comparisons) / len(comparisons)))
     print("Time taken (avg of 10 runs): %0.3f sec" % (sum(times) / len(times)))
