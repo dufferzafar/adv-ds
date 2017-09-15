@@ -1,6 +1,10 @@
 from random import randint
 
 import sys
+import time
+
+# Count the no. of comparisons in partitioning
+comparison_count = 0
 
 
 def swap(arr, i, j):
@@ -15,6 +19,8 @@ def partition(arr, beg, end, pvt_idx):
     Return the updated index of pivot.
     """
 
+    global comparison_count
+
     pvt = arr[pvt_idx]
 
     # Move pivot to the end
@@ -26,6 +32,7 @@ def partition(arr, beg, end, pvt_idx):
     for idx in range(beg, end):
 
         # Move values smaller than pivot to the beginning of array
+        comparison_count += 1
         if arr[idx] < pvt:
             swap(arr, idx, pvt_new_idx)
             pvt_new_idx += 1
@@ -36,6 +43,8 @@ def partition(arr, beg, end, pvt_idx):
     return pvt_new_idx
 
 
+# NOTE: This assumes 1 based order statistics
+# so minimum is the first order statistic
 def select(arr, beg, end, k):
     """
     Return the k-th smallest integer in arr[beg:end]
@@ -79,8 +88,16 @@ if __name__ == '__main__':
         print("k should be in between 1 & %d" % len(arr))
         exit(1)
 
-    # NOTE: This assumes 1 based order statistics
-    # so minimum is the first order statistic
-    ans = select(arr, 0, len(arr)-1, k-1)
+    times = []
+    for _ in range(0, 10):
+        start = time.clock()
+        ans = select(arr, 0, len(arr)-1, k-1)
+        end = time.clock()
+        times.append(end-start)
 
-    print("Integer with rank %d is: %d" % (k, ans))
+    print("Integer with rank %d: %d" % (k, ans))
+
+    print("\n-----\n")
+    print("No. of comparisons: %d" % comparison_count)
+
+    print("Time taken (avg of 10 runs): %0.3f sec" % (sum(times) / len(times)))
