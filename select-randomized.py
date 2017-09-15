@@ -72,7 +72,15 @@ def read_int_file_to_list(filename):
 
 if __name__ == '__main__':
     arr = read_int_file_to_list(sys.argv[1])
+
     k = int(sys.argv[2])
 
-    ans = select(arr, 0, len(arr)-1, k)
-    print(ans)
+    if not (1 <= k <= len(arr)):
+        print("k should be in between 1 & %d" % len(arr))
+        exit(1)
+
+    # NOTE: This assumes 1 based order statistics
+    # so minimum is the first order statistic
+    ans = select(arr, 0, len(arr)-1, k-1)
+
+    print("Integer with rank %d is: %d" % (k, ans))
