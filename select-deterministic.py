@@ -30,21 +30,22 @@ def select(arr, k):
     ]
 
     # Compute median of n/5 medians-of-5
-    median_of_median = select(medians, (len(medians)-1)//2)
+    median_of_medians = select(medians, (len(medians)-1)//2)
 
-    # Partition arr into 3 parts arround median_of_median
+    # Partition arr into 3 parts arround median_of_medians
     lesser, higher, equal = [], [], []
 
     for num in arr:
         comparison_count += 2
-        if num < median_of_median:
+        if num < median_of_medians:
             lesser.append(num)
-        elif num > median_of_median:
+        elif num > median_of_medians:
             higher.append(num)
         else:
             equal.append(num)
 
     # Decide which array to recur on
+    comparison_count += 2
     if k < len(lesser):
         return select(lesser, k)
 
@@ -59,7 +60,6 @@ def read_int_file_to_list(filename):
     """Return a list of integers read from filename."""
 
     arr = []
-    # TODO: Buffered input may increase perf?
     with open(filename, "r") as file:
         for line in file:
             if line:
@@ -81,7 +81,6 @@ if __name__ == '__main__':
     # so minimum is the first order statistic
     start = time.clock()
     ans = select(arr, k-1)
-    # sorted(arr)
     end = time.clock()
 
     print("Integer with rank %d: %d" % (k, ans))

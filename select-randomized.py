@@ -50,6 +50,8 @@ def select(arr, beg, end, k):
     Return the k-th smallest number in arr[beg:end]
     """
 
+    global comparison_count
+
     # If the list has only 1 number
     if beg == end:
         return arr[beg]
@@ -58,6 +60,7 @@ def select(arr, beg, end, k):
     pvt_idx = randint(beg, end)
     pvt_new_idx = partition(arr, beg, end, pvt_idx)
 
+    comparison_count += 2
     if k == pvt_new_idx:
         return arr[pvt_new_idx]
     elif k < pvt_new_idx:
@@ -70,7 +73,6 @@ def read_int_file_to_list(filename):
     """Return a list of numbers read from filename."""
 
     arr = []
-    # TODO: Buffered input may increase perf?
     with open(filename, "r") as file:
         for line in file:
             if line:
