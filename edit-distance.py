@@ -1,7 +1,11 @@
 """Edit Distance between two strings."""
 
+import sys
+
 
 def edit_distance(x, y, cost):
+
+    # print("%r %r %r" % (x, y, cost))
 
     m, n = 1 + len(x), 1 + len(y)
 
@@ -44,3 +48,40 @@ def edit_distance(x, y, cost):
             R[i][j] = min(costs)
 
     return R[m-1][n-1]
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) != 2:
+        print("Usage: edit-distance.py <filename>")
+        exit(1)
+
+    with open(sys.argv[1]) as f:
+
+        lines = map(lambda l: l.strip(), f.readlines())
+
+        if len(lines) != 3:
+            print("Input file should contain 3 lines:\n"
+                  "line 1: string x\n"
+                  "line 2: string y\n"
+                  "line 3: cost list in the format <copy>,<insert>,<replace>,<delete>")
+            exit(1)
+
+        x = lines[0]
+        y = lines[1]
+
+        if not (x.isalnum() and y.isalnum()):
+            print("Strings should be alpha-numeric.")
+            exit(1)
+
+        cost_type = ["copy", "insert", "replace", "delete"]
+        cost_list = map(int, lines[2].split(","))
+
+        if len(cost_list) != 4:
+            print("Cost list should have 4 entries separated by ,: \n"
+                  "<copy>,<insert>,<replace>,<delete>")
+            exit(1)
+
+        cost = dict(zip(cost_type, cost_list))
+
+        print(edit_distance(x, y, cost))
