@@ -3,17 +3,7 @@
 
 ## Consider?
 
-* Start with top down recursive
-
-* Memoize later
-    - functools.lru_cache() ?
-
-* Then Bottom Up
-
 * Print the solution and not just the cost?
-
-* Test it out!
-
 
 ---
 
