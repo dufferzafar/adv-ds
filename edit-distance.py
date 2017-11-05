@@ -1,7 +1,6 @@
 """Edit Distance between two strings."""
 
 import sys
-from array import array
 
 
 def edit_distance(x, y, cost):
@@ -10,46 +9,44 @@ def edit_distance(x, y, cost):
 
     m, n = 1 + len(x), 1 + len(y)
 
-    # Build an m x n list for storing the result
-    # R = [[-1] * n for _ in range(m)]
-    R = [array('i', [-1] * n) for _ in range(m)]
-
-    # When len(x) == 0 (or x = "")
-    for j in range(n):
-        # no other way but to insert all characters of y
-        R[0][j] = cost["insert"] * j
-
-    # Similarly, when len(y) == 0 (or y = "")
-    for i in range(m):
-        # we'll have to delete all the characters of x
-        R[i][0] = cost["delete"] * i
+    # Use two rows instead of a complete matrix
+    prev = [cost["insert"] * j for j in range(n)]
 
     # Go over each character of strings x & y
     for i in range(1, m):
+
+        curr = [None] * n
+        # print(prev, curr)
+
         for j in range(1, n):
+
+            if j == 1:
+                curr[0] = cost["delete"] * i
 
             # Costs of various ways of making the strings equal
             costs = []
 
             # Copy is only possible when the characters match
             if x[i-1] == y[j-1]:  # account for 0 based string indexing
-                costs.append(cost["copy"] + R[i-1][j-1])
+                costs.append(cost["copy"] + prev[j-1])
 
             # Other ways are always possible
 
             # Replace
-            costs.append(cost["replace"] + R[i-1][j-1])
+            costs.append(cost["replace"] + prev[j-1])
 
             # Insert
-            costs.append(cost["insert"] + R[i-1][j])
+            costs.append(cost["insert"] + prev[j])
 
             # Delete
-            costs.append(cost["delete"] + R[i][j-1])
+            costs.append(cost["delete"] + curr[j-1])
 
             # We want the way that returns the minimum
-            R[i][j] = min(costs)
+            curr[j] = min(costs)
 
-    return R[m-1][n-1]
+        prev = curr
+
+    return curr[n-1]
 
 
 if __name__ == '__main__':
