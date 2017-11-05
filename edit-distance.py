@@ -43,6 +43,8 @@ def edit_distance(x, y, cost):
             # We want the way that returns the minimum
             curr.append(min(costs))
 
+        # sys.stdout.write("\r%d" % i)
+
         prev = curr
 
     return curr[n-1]
@@ -64,7 +66,7 @@ if __name__ == '__main__':
                   "where a single test case has "
                   "line 1: string x\n"
                   "line 2: string y\n"
-                  "line 3: cost list in the format <copy>,<insert>,<replace>,<delete>")
+                  "line 3: cost list in the format <copy> <insert> <replace> <delete>")
             exit(1)
 
         t = int(lines[0])
@@ -79,11 +81,11 @@ if __name__ == '__main__':
                 exit(1)
 
             cost_type = ["copy", "insert", "replace", "delete"]
-            cost_list = list(map(int, lines[3*i + 3].split(",")))
+            cost_list = list(map(int, lines[3*i + 3].split(" ")))
 
             if len(cost_list) != 4:
-                print("Cost list should have 4 entries separated by ,: \n"
-                      "<copy>,<insert>,<replace>,<delete>")
+                print("Cost list should have 4 entries separated by <space>: \n"
+                      "<copy> <insert> <replace> <delete>")
                 exit(1)
 
             cost = dict(zip(cost_type, cost_list))
