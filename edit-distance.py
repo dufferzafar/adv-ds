@@ -1,6 +1,7 @@
 """Edit Distance between two strings."""
 
 import sys
+from array import array
 
 
 def edit_distance(x, y, cost):
@@ -10,7 +11,8 @@ def edit_distance(x, y, cost):
     m, n = 1 + len(x), 1 + len(y)
 
     # Build an m x n list for storing the result
-    R = [[-1] * n for _ in range(m)]
+    # R = [[-1] * n for _ in range(m)]
+    R = [array('i', [-1] * n) for _ in range(m)]
 
     # When len(x) == 0 (or x = "")
     for j in range(n):
@@ -58,30 +60,37 @@ if __name__ == '__main__':
 
     with open(sys.argv[1]) as f:
 
-        lines = map(lambda l: l.strip(), f.readlines())
+        lines = list(map(lambda l: l.strip(), f.readlines()))
 
-        if len(lines) != 3:
-            print("Input file should contain 3 lines:\n"
+        if len(lines) % 3 != 1:
+            print("Input file should contain 3T + 1 lines:\n"
+                  "the first line has number of test cases T\n"
+                  "where a single test case has "
                   "line 1: string x\n"
                   "line 2: string y\n"
                   "line 3: cost list in the format <copy>,<insert>,<replace>,<delete>")
             exit(1)
 
-        x = lines[0]
-        y = lines[1]
+        t = int(lines[0])
 
-        if not (x.isalnum() and y.isalnum()):
-            print("Strings should be alpha-numeric.")
-            exit(1)
+        for i in range(0, t):
 
-        cost_type = ["copy", "insert", "replace", "delete"]
-        cost_list = map(int, lines[2].split(","))
+            x = lines[3*i + 1]
+            y = lines[3*i + 2]
 
-        if len(cost_list) != 4:
-            print("Cost list should have 4 entries separated by ,: \n"
-                  "<copy>,<insert>,<replace>,<delete>")
-            exit(1)
+            if x and y and not (x.isalnum() and y.isalnum()):
+                print("Strings should be alpha-numeric: [a-zA-Z0-9]*")
+                exit(1)
 
-        cost = dict(zip(cost_type, cost_list))
+            cost_type = ["copy", "insert", "replace", "delete"]
+            cost_list = list(map(int, lines[3*i + 3].split(",")))
 
-        print(edit_distance(x, y, cost))
+            if len(cost_list) != 4:
+                print("Cost list should have 4 entries separated by ,: \n"
+                      "<copy>,<insert>,<replace>,<delete>")
+                exit(1)
+
+            cost = dict(zip(cost_type, cost_list))
+
+            ans = edit_distance(x, y, cost)
+            print(ans % (10 ** 9 + 7))
