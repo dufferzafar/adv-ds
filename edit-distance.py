@@ -15,13 +15,12 @@ def edit_distance(x, y, cost):
     # Go over each character of strings x & y
     for i in range(1, m):
 
-        curr = [None] * n
-        # print(prev, curr)
+        curr = []
 
         for j in range(1, n):
 
             if j == 1:
-                curr[0] = cost["delete"] * i
+                curr.append(cost["delete"] * i)
 
             # Costs of various ways of making the strings equal
             costs = []
@@ -42,7 +41,7 @@ def edit_distance(x, y, cost):
             costs.append(cost["delete"] + curr[j-1])
 
             # We want the way that returns the minimum
-            curr[j] = min(costs)
+            curr.append(min(costs))
 
         prev = curr
 
