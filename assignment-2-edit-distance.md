@@ -26,3 +26,32 @@ Note carefully the following instructions for the submission of programming assi
 Neha
 
 ---
+
+There is a minor change in input format of programming assignment.
+
+Input will consist of (3T+1) lines.
+
+The first line will be 'T', the number of test cases.
+
+Next 3T lines follow:
+
+A single test case consists of 3 lines:
+
+line 1: string x.
+line 2: string y.
+line 3: cost function, an array of 4 values, the cost of operations: 
+(Copy, Insert, Replace, Delete)
+
+Output:
+A single integer, the cost of transforming string x to string y.
+
+Final Output:
+A list of T integers, where ith value is output of ith test case.
+
+Constraints:
+
+Let the length of string x is: m.
+Let the length of string y is: n.
+Then,
+      0<=m*n<=10^9
+      Cost of any operation 'C'  is 0<=C<=9*(10^10).
