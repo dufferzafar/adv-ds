@@ -35,10 +35,10 @@ def edit_distance(x, y, cost):
             costs.append(cost["replace"] + prev[j-1])
 
             # Insert
-            costs.append(cost["insert"] + prev[j])
+            costs.append(cost["insert"] + curr[j-1])
 
             # Delete
-            costs.append(cost["delete"] + curr[j-1])
+            costs.append(cost["delete"] + prev[j])
 
             # We want the way that returns the minimum
             curr.append(min(costs))
@@ -47,6 +47,7 @@ def edit_distance(x, y, cost):
 
         prev = curr
 
+    # sys.stdout.write("\r")
     return curr[n-1]
 
 
